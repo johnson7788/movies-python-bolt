@@ -8,12 +8,13 @@ from neo4j import GraphDatabase, basic_auth
 
 app = Flask(__name__, static_url_path='/static/')
 
-url = os.getenv("NEO4J_URI", "neo4j+s://demo.neo4jlabs.com")
+url = os.getenv("NEO4J_URI", "bolt://localhost:7687")
 username = os.getenv("NEO4J_USER", "movies")
 password = os.getenv("NEO4J_PASSWORD", "movies")
 neo4jVersion = os.getenv("NEO4J_VERSION", "4")
 database = os.getenv("NEO4J_DATABASE", "movies")
 
+#flask的网页端口
 port = os.getenv("PORT", 8080)
 
 driver = GraphDatabase.driver(url, auth=basic_auth(username, password))
