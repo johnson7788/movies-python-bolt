@@ -36,3 +36,7 @@ python movies.py
 # 浏览页面，完成
 http://127.0.0.1:8080/
 
+# 结果
+![screenshot1.png](screenshot1.png)
+
+
