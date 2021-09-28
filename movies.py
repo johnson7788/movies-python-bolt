@@ -108,6 +108,7 @@ def get_search():
 @app.route("/movie/<title>")
 def get_movie(title):
     db = get_db()
+    # 读数据库
     result = db.read_transaction(lambda tx: tx.run("MATCH (movie:Movie {title:$title}) "
                                                    "OPTIONAL MATCH (movie)<-[r]-(person:Person) "
                                                    "RETURN movie.title as title,"
@@ -124,6 +125,7 @@ def get_movie(title):
 @app.route("/movie/<title>/vote", methods=["POST"])
 def vote_in_movie(title):
     db = get_db()
+    # 写数据库
     summary = db.write_transaction(lambda tx: tx.run("MATCH (m:Movie {title: $title}) "
                                                     "WITH m, (CASE WHEN exists(m.votes) THEN m.votes ELSE 0 END) AS currentVotes "
                                                     "SET m.votes = currentVotes + 1;", {"title": title}).consume())
@@ -133,7 +135,6 @@ def vote_in_movie(title):
 
     return Response(dumps({"updates": updates}), mimetype="application/json")
 
-
 if __name__ == '__main__':
-    logging.info('Running on port %d, database is at %s', port, url)
+    logging.info('网页监听：%d端口, neo4j数据库是：%s', port, url)
     app.run(port=port)
