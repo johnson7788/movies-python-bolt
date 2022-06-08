@@ -18,7 +18,7 @@ driver = GraphDatabase.driver(url, auth=basic_auth(username, password))
 
 
 @contextlib.contextmanager
-def open_session(database=None, neo4j_version="4"):
+def open_session(database=None, neo4jVersion="4"):
     # __enter__方法
     print('开启session')
     if neo4jVersion.startswith("4"):
@@ -39,7 +39,7 @@ def test_query():
     :return:
     :rtype:
     """
-    with open_session(database=database, neo4j_version=neo4jVersion) as db:
+    with open_session(database=database, neo4jVersion=neo4jVersion) as db:
         results = db.read_transaction(lambda tx: list(tx.run('MATCH (tom {name: "Tom Hanks"}) RETURN tom')))
         for record in results:
             print(record)
